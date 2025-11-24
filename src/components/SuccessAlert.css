@@ -1,0 +1,47 @@
+.success-alert {
+  background-color: #efe;
+  border: 1px solid #cfc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #3c3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.success-alert-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.success-alert-content strong {
+  font-size: 1.2rem;
+}
+
+.success-alert-content p {
+  margin: 0;
+}
+
+.success-alert-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #3c3;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.success-alert-close:hover {
+  color: #2a2;
+}
+

@@ -1,0 +1,54 @@
+.error-alert {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #c33;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.error-alert-content {
+  flex: 1;
+}
+
+.error-alert-content strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.error-alert-content p {
+  margin: 0.5rem 0;
+}
+
+.error-list {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+}
+
+.error-list li {
+  margin: 0.25rem 0;
+}
+
+.error-alert-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #c33;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.error-alert-close:hover {
+  color: #a00;
+}
+
