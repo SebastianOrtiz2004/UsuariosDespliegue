@@ -144,7 +144,7 @@ export const UsersList: React.FC = () => {
             </div>
           ) : (
             <div className="users-grid">
-              {users.length === 0 ? (
+              {!Array.isArray(users) || users.length === 0 ? (
                 <p className="empty-state">No hay usuarios registrados</p>
               ) : (
                 users.map((user) => (

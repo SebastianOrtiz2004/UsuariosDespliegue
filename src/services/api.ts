@@ -104,7 +104,8 @@ class ApiService {
   // User endpoints
   async getUsers(): Promise<User[]> {
     const response = await this.api.get<User[]>('/api/users');
-    return response.data;
+    // Asegurar que siempre devolvemos un array
+    return Array.isArray(response.data) ? response.data : [];
   }
 
   async createUser(data: RegisterData): Promise<User> {

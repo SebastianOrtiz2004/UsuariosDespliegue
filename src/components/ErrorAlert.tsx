@@ -15,13 +15,16 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({ error, onClose }) => {
       <div className="error-alert-content">
         <strong>Error:</strong>
         <p>{error.message}</p>
-        {error.errors && (
+        {error.errors && typeof error.errors === 'object' && (
           <ul className="error-list">
-            {Object.entries(error.errors).map(([field, messages]) => (
-              <li key={field}>
-                <strong>{field}:</strong> {messages.join(', ')}
-              </li>
-            ))}
+            {Object.entries(error.errors).map(([field, messages]) => {
+              const messageArray = Array.isArray(messages) ? messages : [String(messages)];
+              return (
+                <li key={field}>
+                  <strong>{field}:</strong> {messageArray.join(', ')}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

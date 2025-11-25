@@ -35,10 +35,13 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
       setLoading(true);
       setError(null);
       const data = await apiService.getUsers();
-      setUsers(data);
+      // Asegurar que siempre sea un array
+      setUsers(Array.isArray(data) ? data : []);
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError);
+      // En caso de error, asegurar que users sea un array vacío
+      setUsers([]);
     } finally {
       setLoading(false);
     }
