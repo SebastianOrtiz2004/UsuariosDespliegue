@@ -11,6 +11,8 @@ class ApiService {
       baseURL: API_URL,
       headers: {
         'Content-Type': 'application/json',
+        // Saltar la página de advertencia de ngrok
+        'ngrok-skip-browser-warning': 'true',
       },
     });
 
@@ -24,6 +26,10 @@ class ApiService {
         const token = localStorage.getItem('token');
         if (token && config.headers) {
           config.headers.Authorization = `Bearer ${token}`;
+        }
+        // Asegurar que el header de ngrok esté presente en todas las peticiones
+        if (config.headers) {
+          config.headers['ngrok-skip-browser-warning'] = 'true';
         }
         return config;
       },
@@ -105,16 +111,17 @@ class ApiService {
   async getUsers(): Promise<User[]> {
     try {
       const response = await this.api.get<User[]>('/api/users');
+      
       // Asegurar que siempre devolvemos un array
       if (Array.isArray(response.data)) {
         return response.data;
       }
       // Si la respuesta no es un array, devolver array vacío
-      console.warn('getUsers: La respuesta no es un array:', response.data);
+      console.warn('⚠️ getUsers: La respuesta no es un array:', response.data);
       return [];
     } catch (error) {
-      console.error('Error en getUsers:', error);
-      return [];
+      console.error('❌ Error en getUsers:', error);
+      throw error; // Re-lanzar el error para que se maneje en el contexto
     }
   }
 

@@ -36,7 +36,8 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
       setError(null);
       const data = await apiService.getUsers();
       // Asegurar que siempre sea un array
-      setUsers(Array.isArray(data) ? data : []);
+      const usersArray = Array.isArray(data) ? data : [];
+      setUsers(usersArray);
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError);
@@ -52,9 +53,15 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
       setLoading(true);
       setError(null);
       const newUser = await apiService.createUser(data);
+      // Actualizar la lista inmediatamente con el nuevo usuario
       setUsers((prev) => {
         // Asegurar que prev sea un array
         const prevArray = Array.isArray(prev) ? prev : [];
+        // Verificar que el usuario no esté ya en la lista
+        const exists = prevArray.some(u => u.id === newUser.id || u.email === newUser.email);
+        if (exists) {
+          return prevArray;
+        }
         return [...prevArray, newUser];
       });
     } catch (err) {

@@ -32,13 +32,15 @@ export const UsersList: React.FC = () => {
     setSuccessMessage(null);
 
     try {
-      console.log('Intentando crear usuario:', { email: formData.email, name: formData.name });
       await createUser(formData);
       setSuccessMessage('Usuario creado exitosamente');
       setFormData({ name: '', email: '', password: '' });
       setShowForm(false);
-      // Recargar la lista de usuarios
-      await fetchUsers();
+      // Recargar la lista de usuarios después de crear
+      // Esperar un momento para asegurar que el backend haya procesado la creación
+      setTimeout(async () => {
+        await fetchUsers();
+      }, 300);
     } catch (err: any) {
       console.error('Error al crear usuario:', err);
       // El error ya está manejado por el contexto y se mostrará en ErrorAlert
@@ -137,7 +139,7 @@ export const UsersList: React.FC = () => {
         <>
           <ErrorAlert error={error} onClose={clearError} />
           
-          {loading && users.length === 0 ? (
+          {loading && (!users || users.length === 0) ? (
             <div style={{ textAlign: 'center', padding: '3rem' }}>
               <LoadingSpinner />
               <p style={{ marginTop: '1rem', color: '#666' }}>Cargando usuarios...</p>
