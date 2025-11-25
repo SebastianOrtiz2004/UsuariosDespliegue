@@ -11,19 +11,20 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({ error, onClose }) => {
   if (!error) return null;
 
   // Validar que error.errors sea un objeto válido antes de usar Object.entries
-  const hasValidErrors = error.errors && 
-    typeof error.errors === 'object' && 
-    !Array.isArray(error.errors) &&
-    Object.keys(error.errors).length > 0;
+  const errors = error.errors;
+  const hasValidErrors = errors && 
+    typeof errors === 'object' && 
+    !Array.isArray(errors) &&
+    Object.keys(errors).length > 0;
 
   return (
     <div className="error-alert" role="alert">
       <div className="error-alert-content">
         <strong>Error:</strong>
         <p>{error.message || 'Ha ocurrido un error'}</p>
-        {hasValidErrors && (
+        {hasValidErrors && errors && (
           <ul className="error-list">
-            {Object.entries(error.errors).map(([field, messages]) => {
+            {Object.entries(errors).map(([field, messages]) => {
               const messageArray = Array.isArray(messages) ? messages : [String(messages || '')];
               return (
                 <li key={field}>
