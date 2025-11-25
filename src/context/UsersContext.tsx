@@ -52,7 +52,11 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
       setLoading(true);
       setError(null);
       const newUser = await apiService.createUser(data);
-      setUsers((prev) => [...prev, newUser]);
+      setUsers((prev) => {
+        // Asegurar que prev sea un array
+        const prevArray = Array.isArray(prev) ? prev : [];
+        return [...prevArray, newUser];
+      });
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError);

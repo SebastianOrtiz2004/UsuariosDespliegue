@@ -103,9 +103,19 @@ class ApiService {
 
   // User endpoints
   async getUsers(): Promise<User[]> {
-    const response = await this.api.get<User[]>('/api/users');
-    // Asegurar que siempre devolvemos un array
-    return Array.isArray(response.data) ? response.data : [];
+    try {
+      const response = await this.api.get<User[]>('/api/users');
+      // Asegurar que siempre devolvemos un array
+      if (Array.isArray(response.data)) {
+        return response.data;
+      }
+      // Si la respuesta no es un array, devolver array vacío
+      console.warn('getUsers: La respuesta no es un array:', response.data);
+      return [];
+    } catch (error) {
+      console.error('Error en getUsers:', error);
+      return [];
+    }
   }
 
   async createUser(data: RegisterData): Promise<User> {
